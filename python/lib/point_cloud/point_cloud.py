@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 import numpy as np
-from pathlib import Path
+from pathlib import Path as pth
+from ..util import load_ply
 
 
 class PointCloudViewer():
   def __init__(self, filename):
-    self.filepath_ = Path(filename)
+    self.filepath_ = pth(filename)
     self.read_pts_ = False
     self.get_data_from_path()
 
@@ -18,7 +19,6 @@ class PointCloudViewer():
     file_type = self.filepath_.name.split('.')[-1]
 
     if file_type == 'ply':
-      from load_ply import load_ply
       self.data_np_ = load_ply(self.filepath_)
     elif file_type == 'npy':
       self.data_np_ = np.load(self.filepath_)
@@ -33,11 +33,13 @@ class PointCloudViewer():
     print('shape:', self.data_np_.shape)
     return True
   
-  def save(self, filepath, filetype='.bin'):
-    if not self.read_pts_ or not Path(filepath).is_dir():
+  def save(self, filepath, basename=None, filetype='.bin'):
+    if not self.read_pts_ or not pth(filepath).is_dir():
       return False
     
-    save_path = Path(filepath) / (self.basename_ + filetype)
+    basename = self.basename_ if basename is None else basename
+    save_path = pth(filepath) / (basename + filetype)
+
     if filetype == '.bin':
       with open(save_path, 'w') as f:
         self.data_np_.tofile(f)
@@ -46,7 +48,7 @@ class PointCloudViewer():
     else:
       print('not support filetype')
       return False
-    print('saved')
+    print('save to file:', save_path)
     return True
   
   def show(self):
@@ -71,7 +73,5 @@ class PointCloudViewer():
     mlab.plot3d([0, axes[2, 0]], [0, axes[2, 1]], [0, axes[2, 2]],
                 color=(0, 0, 1), tube_radius=None, figure=fig, )
     mlab.show()
-
-
 
 
