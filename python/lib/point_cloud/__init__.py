@@ -1,2 +1,3 @@
-from .point_cloud import PointCloudViewer
+from .point_cloud import PointCloud
+from .viewer import *
 del point_cloud

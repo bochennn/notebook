@@ -4,17 +4,16 @@ from pathlib import Path as pth
 homepath = pth().home()
 
 def view_point_cloud(filepath):
-  from lib.point_cloud import PointCloudViewer
-  viewer = PointCloudViewer(filepath)
+  from lib.point_cloud import PointCloud
+  viewer = PointCloud(filepath)
   viewer.show()
 
 def save_point_cloud(filepath, savepath):
-  from lib.point_cloud import PointCloudViewer
-  viewer = PointCloudViewer(filepath)
+  from lib.point_cloud import PointCloud
+  viewer = PointCloud(filepath)
   viewer.save(savepath, filetype='.bin')
 
 def save_recursively():
-  from lib.point_cloud import PointCloudViewer
   from lib.util import load_file
   files = load_file('training.txt')
   root_path = pth().home() / 'Data/Holomatic/data/seq2/compensated_ply'
