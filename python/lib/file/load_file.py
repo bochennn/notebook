@@ -20,3 +20,7 @@ def load_file(filename):
       f.close()
     return content
 
+def load_file_as_array(filename):
+  import numpy as np
+  return np.array(load_file(filename))
+

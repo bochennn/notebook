@@ -4,7 +4,7 @@ import pandas as pd
 from plyfile import PlyData
 
 
-def load_ply(filepath):
+def load_ply(filepath, flu=False):
   data_ply = PlyData.read(filepath)
   data_pd = pd.DataFrame(data_ply.elements[0].data)
   data_np = np.zeros((data_pd.shape[0], 4), dtype=np.float32)

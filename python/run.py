@@ -23,6 +23,18 @@ def save_recursively():
     read_filepath = root_path / ('%s.ply' % filename)
     save_point_cloud(read_filepath, save_path)
 
+def generate_random_sample():
+  import numpy as np
+  from lib.file import load_file_as_array, save_array_as_f
+  from lib.data import random_sample
+  sample_list = load_file_as_array(
+    '/home/ubuntu/Lidar/OpenPCDet/data/holomatic/ImageSets/sample_list.txt')
+  sample_a, sample_b = random_sample(sample_list, 4800)
+
+  save_array_as_f('train.txt', sample_a)
+  save_array_as_f('test.txt', sample_a)
+  #[ print(n) for n in sample_list[sample_idx] ]
+
 def view_glog():
   from glog_viewer import GlogViewer
   viewer = GlogViewer()
@@ -32,8 +44,9 @@ def view_glog():
 
 #view_point_cloud('/home/ubuntu/Lidar/OpenPCDet/data/holomatic/gt_database/00002450_car_0.bin')
 #view_point_cloud('/home/ubuntu/Lidar/OpenPCDet/data/holomatic/training/pc/00002450.bin')
-view_point_cloud('/home/ubuntu/Lidar/OpenPCDet/data/kitti/gt_database/000253_Car_0.bin')
+#view_point_cloud('/home/ubuntu/Lidar/OpenPCDet/data/kitti/gt_database/000253_Car_0.bin')
 #save_point_cloud(filepath, '/home/bochen')
 #save_recursively()
 
+generate_random_sample()
 
